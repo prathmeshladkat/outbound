@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voice Pipeline Test</title>
+</head>
+<body>
+  <h2>Pipecat + Deepgram Microphone Test</h2>
+  <button id="start">Start microphone</button>
+  <button id="stop" disabled>Stop</button>
+  <p id="status">Disconnected</p>
+
+  <script>
+    let socket;
+    let stream;
+    let audioContext;
+    let source;
+    let processor;
+    let silence;
+    let playbackEpoch = 0;
+    let audioChunksReceived = 0;
+    let interruptionsReceived = 0;
+
+    const status = document.getElementById("status");
+    const startButton = document.getElementById("start");
+    const stopButton = document.getElementById("stop");
+
+    function resample(input, sourceRate, targetRate) {
+      const outputLength = Math.round(
+        input.length * targetRate / sourceRate
+      );
+      const output = new Float32Array(outputLength);
+      const ratio = sourceRate / targetRate;
+
+      for (let i = 0; i < outputLength; i++) {
+        const position = i * ratio;
+        const left = Math.floor(position);
+        const right = Math.min(left + 1, input.length - 1);
+        const fraction = position - left;
+
+        output[i] =
+          input[left] * (1 - fraction) +
+          input[right] * fraction;
+      }
+
+      return output;
+    }
+
+    const playbackContext = new AudioContext({
+      sampleRate: 24000
+    });
+
+    
+    let nextPlaybackTime = 0;
+    const activeAudioSources = new Set();
+
+    function playPCM16(arrayBuffer) {
+        const epoch = playbackEpoch;
+        
+        if (!playbackContext || arrayBuffer.byteLength < 2) {
+            return;
+        }
+      
+        const view = new DataView(arrayBuffer);
+        const sampleCount = Math.floor(arrayBuffer.byteLength / 2);
+      
+        const audioBuffer = playbackContext.createBuffer(
+            1,
+            sampleCount,
+            24000
+        );
+      
+        const channel = audioBuffer.getChannelData(0);
+      
+        for (let i = 0; i < sampleCount; i++) {
+            channel[i] = view.getInt16(i * 2, true) / 32768;
+        }
+      
+        // Prevent an interrupted decode from scheduling playback.
+        if (epoch !== playbackEpoch) {
+            console.log("[STALE AUDIO] Dropped outdated buffer");
+            return;
+        }
+      
+        const source = playbackContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(playbackContext.destination);
+      
+        activeAudioSources.add(source);
+      
+        source.onended = () => {
+            activeAudioSources.delete(source);
+            source.disconnect();
+        };
+      
+        const startTime = Math.max(
+            playbackContext.currentTime + 0.08,
+            nextPlaybackTime
+        );
+      
+        source.start(startTime);
+      
+        nextPlaybackTime = startTime + audioBuffer.duration;
+      
+        audioChunksReceived++;
+    }
+
+    function interruptPlayback() {
+      playbackEpoch++;
+      interruptionsReceived++;
+
+      for (const source of activeAudioSources) {
+          try {
+              source.stop();
+          } catch (error) {
+              // Source may already have stopped.
+          }
+
+          source.disconnect();
+      }
+
+      activeAudioSources.clear();
+
+      nextPlaybackTime = playbackContext.currentTime;
+
+      console.log(
+          `[BARGE-IN] epoch=${playbackEpoch} ` +
+          `interruptions=${interruptionsReceived}`
+      );
+    }
+
+    function toPCM16(samples) {
+      const buffer = new ArrayBuffer(samples.length * 2);
+      const view = new DataView(buffer);
+
+      for (let i = 0; i < samples.length; i++) {
+        const sample = Math.max(-1, Math.min(1, samples[i]));
+        view.setInt16(
+          i * 2,
+          sample < 0 ? sample * 32768 : sample * 32767,
+          true
+        );
+      }
+
+      return buffer;
+    }
+
+    startButton.onclick = async () => {
+      try {
+        socket = new WebSocket("ws://localhost:8000/ws/audio");
+        socket.binaryType = "arraybuffer";
+
+        socket.onmessage = (event) => {
+          if (typeof event.data === "string") {
+            const message = JSON.parse(event.data);
+
+            if (message.type === "interrupt") {
+            
+              interruptPlayback();
+            }
+
+            
+
+            return;
+          }
+
+          if (event.data instanceof ArrayBuffer) {
+            
+            playPCM16(event.data);
+          }
+        };
+
+        await new Promise((resolve, reject) => {
+          socket.onopen = resolve;
+          socket.onerror = () => reject(
+            new Error("WebSocket connection failed")
+          );
+        });
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true,
+          }
+        });
+
+        audioContext = new AudioContext();
+        await audioContext.resume();
+        await playbackContext.resume();
+
+        source = audioContext.createMediaStreamSource(stream);
+        processor = audioContext.createScriptProcessor(4096, 1, 1);
+
+        // Keep processor running without playing microphone audio.
+        silence = audioContext.createGain();
+        silence.gain.value = 0;
+
+        processor.onaudioprocess = (event) => {
+          if (socket.readyState !== WebSocket.OPEN) return;
+
+          const input = event.inputBuffer.getChannelData(0);
+          const samples = resample(
+            input,
+            audioContext.sampleRate,
+            16000
+          );
+
+          socket.send(toPCM16(samples));
+        };
+
+        source.connect(processor);
+        processor.connect(silence);
+        silence.connect(audioContext.destination);
+
+        status.textContent = "Streaming microphone audio";
+        startButton.disabled = true;
+        stopButton.disabled = false;
+
+        socket.onclose = () => {
+          status.textContent = "WebSocket disconnected";
+          stopButton.disabled = true;
+          startButton.disabled = false;
+        };
+      } catch (error) {
+        status.textContent = error.message;
+        console.error(error);
+        stopButton.onclick();
+      }
+    };
+
+    stopButton.onclick = async () => {
+      if (processor) {
+        processor.disconnect();
+        processor.onaudioprocess = null;
+      }
+      if (source) source.disconnect();
+      if (silence) silence.disconnect();
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+
+      if (audioContext && audioContext.state !== "closed") {
+        await audioContext.close();
+      }
+
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
+
+      status.textContent = "Stopped";
+      startButton.disabled = false;
+      stopButton.disabled = true;
+    };
+  </script>
+</body>
+</html>

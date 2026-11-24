@@ -1,0 +1,25 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.1",
+    "asyncpg>=0.32.0",
+    "fastapi>=0.163.2",
+    "numpy>=2.5.5",
+    "pipecat-ai[deepgram,google,local,silero,websocket]==1.15.0",
+    "pydantic-settings>=2.16.3",
+    "python-dotenv>=1.2.4",
+    "redis>=8.1.0",
+    "scipy>=1.18.1",
+    "sqlalchemy[asyncio]>=2.1.9",
+    "structlog>=26.1.0",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]

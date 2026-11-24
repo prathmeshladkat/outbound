@@ -1,0 +1,851 @@
+INFO:     Will watch for changes in these directories: ['/home/prathamesh/projects/tago-health']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [4102] using WatchFiles
+2026-11-24 04:31:56.846 | INFO     | pipecat:<module>:54 - ᓚᘏᗢ Pipecat 1.15.0 (Python 3.12.16 (main, Nov 11 2026, 00:15:59) [Clang 23.1.3 ]) ᓚᘏᗢ
+INFO:     Started server process [4104]
+INFO:     Waiting for application startup.
+2026-11-24 04:31:58,926 INFO sqlalchemy.engine.Engine select pg_catalog.version()
+2026-11-24 04:31:58,926 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-11-24 04:31:58,933 INFO sqlalchemy.engine.Engine select current_schema()
+2026-11-24 04:31:58,933 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-11-24 04:31:58,938 INFO sqlalchemy.engine.Engine show standard_conforming_strings
+2026-11-24 04:31:58,938 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-11-24 04:31:58,942 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-11-24 04:31:58,950 INFO sqlalchemy.engine.Engine SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname IN ($7::VARCHAR, $8::VARCHAR) AND pg_catalog.pg_class.relkind = ANY (ARRAY[$1::VARCHAR, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $6::VARCHAR
+2026-11-24 04:31:58,950 INFO sqlalchemy.engine.Engine [generated in 0.00085s] ('r', 'p', 'f', 'v', 'm', 'pg_catalog', 'calls', 'call_events')
+2026-11-24 04:31:58,964 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+2026-11-24 04:32:22.732 | INFO     | app.api.websocket.exotel:handle_exotel_call:338 - [CALL 1baf87586eae4e67ab277fb2fe8fc9f7] Created state=connecting mode=outbound
+INFO:     103.251.70.106:0 - "WebSocket /ws/exotel-outbound/5be9f7b6ea21a219c9c0daf3dab830a9cd4dcc5eeef96a48" [accepted]
+INFO:     connection open
+2026-11-24 04:32:22.735 | INFO     | app.api.websocket.exotel:handle_exotel_call:351 - [CALL 1baf87586eae4e67ab277fb2fe8fc9f7] Connected state=active
+2026-11-24 04:32:22.739 | INFO     | app.api.websocket.exotel:handle_exotel_call:373 - [CALL 1baf87586eae4e67ab277fb2fe8fc9f7] Starting Pipecat
+2026-11-24 04:32:22.741 | DEBUG    | pipecat.services.stt_service:__init__:151 - Language string 'multi' is not a recognized Language code. It will be passed to the service as-is.
+2026-11-24 04:32:22.823 | DEBUG    | pipecat.audio.vad.silero:__init__:169 - Loading Silero VAD model...
+2026-11-24 04:32:23.043 | DEBUG    | pipecat.audio.vad.silero:__init__:194 - Loaded Silero VAD
+/home/prathamesh/projects/tago-health/app/voice/llm/gemini.py:7: DeprecationWarning: `GoogleLLMService(model=...)` is deprecated since 0.0.105 and will be removed in 2.0.0. Use `settings=GoogleLLMService.Settings(model=...)` instead. If both are provided, `settings` takes precedence.
+  return GoogleLLMService(
+2026-11-24 04:32:23.113 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking Pipeline#0::Source -> FastAPIWebsocketInputTransport#0
+2026-11-24 04:32:23.113 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking FastAPIWebsocketInputTransport#0 -> DeepgramSTTService#0
+2026-11-24 04:32:23.113 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking DeepgramSTTService#0 -> TranscriptProcessor#0
+2026-11-24 04:32:23.113 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking TranscriptProcessor#0 -> AnswerClassificationProcessor#0
+2026-11-24 04:32:23.113 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking AnswerClassificationProcessor#0 -> IVRProcessor#0
+2026-11-24 04:32:23.113 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking IVRProcessor#0 -> AudioEnergyProcessor#0
+2026-11-24 04:32:23.114 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking AudioEnergyProcessor#0 -> VADProcessor#0
+2026-11-24 04:32:23.114 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking VADProcessor#0 -> SpeechActivityMonitor#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking SpeechActivityMonitor#0 -> OutboundVoiceGate#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking OutboundVoiceGate#0 -> LLMUserAggregator#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking LLMUserAggregator#0 -> GoogleLLMService#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking GoogleLLMService#0 -> LatencyMonitor#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking LatencyMonitor#0 -> LLMResponseLogger#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking LLMResponseLogger#0 -> LanguageVoiceRouter#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking LanguageVoiceRouter#0 -> DeepgramTTSService#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking DeepgramTTSService#0 -> LLMAssistantAggregator#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking LLMAssistantAggregator#0 -> FastAPIWebsocketOutputTransport#0
+2026-11-24 04:32:23.115 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking FastAPIWebsocketOutputTransport#0 -> Pipeline#0::Sink
+2026-11-24 04:32:23.117 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking PipelineTask#0::Source -> RTVIProcessor#0
+2026-11-24 04:32:23.117 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking RTVIProcessor#0 -> Pipeline#0
+2026-11-24 04:32:23.117 | DEBUG    | pipecat.processors.frame_processor:link:705 - Linking Pipeline#0 -> PipelineTask#0::Sink
+2026-11-24 04:32:23.117 | INFO     | app.voice.pipeline:run_transcription_pipeline:496 - [OUTBOUND DEBUG] Pipeline call_mode=outbound
+2026-11-24 04:32:23.118 | INFO     | app.voice.pipeline:run_transcription_pipeline:506 - [OUTBOUND DEBUG] Greeting task scheduled
+/home/prathamesh/projects/tago-health/app/voice/pipeline.py:510: DeprecationWarning: `WorkerRunner.run(worker)` is deprecated since 1.3.0 and will be removed in 2.0.0. Use `WorkerRunner.add_workers()` before `run()` instead.
+  await runner.run(task)
+2026-11-24 04:32:23.120 | DEBUG    | pipecat.workers.runner:run:273 - WorkerRunner 'runner-8c404061': started running
+2026-11-24 04:32:23.120 | DEBUG    | pipecat.workers.runner:add_workers:230 - WorkerRunner 'runner-8c404061': added worker 'PipelineTask#0'
+2026-11-24 04:32:23.121 | INFO     | app.voice.pipeline:outbound_greeting_timer:413 - [OUTBOUND DEBUG] Greeting timer task created
+2026-11-24 04:32:23.121 | INFO     | app.voice.pipeline:outbound_greeting_timer:416 - [OUTBOUND DEBUG] Waiting for Exotel start event
+2026-11-24 04:32:23.121 | DEBUG    | pipecat.workers.runner:_start_worker:459 - WorkerRunner 'runner-8c404061': starting worker 'PipelineTask#0'
+2026-11-24 04:32:23.124 | DEBUG    | pipecat.services.deepgram.stt:_connect:630 - Connecting to Deepgram
+2026-11-24 04:32:23.124 | DEBUG    | pipecat.audio.vad.vad_analyzer:set_params:157 - Setting VAD params to: confidence=0.7 start_secs=0.2 stop_secs=0.5 min_volume=0.6
+2026-11-24 04:32:23.125 | DEBUG    | pipecat.services.deepgram.tts:_connect_websocket:254 - Connecting to Deepgram WebSocket
+2026-11-24 04:32:23.127 | DEBUG    | pipecat.pipeline.worker:_wait_for_pipeline_start:1327 - PipelineTask#0: Starting. Waiting for StartFrame#0 to reach the end of the pipeline...
+2026-11-24 04:32:23.339 | INFO     | app.voice.serializers.exotel:deserialize:119 - [EXOTEL SERIALIZER] Stream started: aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:23.339 | INFO     | app.api.websocket.exotel:handle_exotel_event:311 - [OUTBOUND DEBUG] Stream event SET mode=outbound event_is_set=True
+2026-11-24 04:32:23.339 | INFO     | app.voice.pipeline:outbound_greeting_timer:421 - [OUTBOUND DEBUG] Stream started; waiting 3 seconds for speech or transcript
+2026-11-24 04:32:24.045 | DEBUG    | pipecat.services.deepgram.tts:_connect_websocket:277 - DeepgramTTSService#0: Websocket connection initialized: {"headers": {'dg-project-id': '1f0b075e-2abf-43cd-abd1-db04757f2436', 'dg-request-id': '01a20bd3-8f06-7180-a6e1-3ad256fa2547'}}
+2026-11-24 04:32:24.049 | DEBUG    | pipecat.services.deepgram.stt:_connection_handler:677 - DeepgramSTTService#0: Websocket connection initialized
+2026-11-24 04:32:24.103 | DEBUG    | pipecat.registry.registry:register:132 - Worker 'PipelineTask#0' ready (local)
+2026-11-24 04:32:24.103 | DEBUG    | pipecat.workers.runner:_send_registry:511 - WorkerRunner 'runner-8c404061': broadcasting registry: ['PipelineTask#0']
+2026-11-24 04:32:24.104 | DEBUG    | pipecat.workers.base_worker:_maybe_activate:1284 - Worker 'PipelineTask#0': activated
+2026-11-24 04:32:24.104 | DEBUG    | pipecat.pipeline.worker:_wait_for_pipeline_start:1344 - PipelineTask#0: StartFrame#0 reached the end of the pipeline, pipeline is now ready.
+2026-11-24 04:32:24.218 | DEBUG    | pipecat.processors.audio.vad_processor:on_speech_started:73 - VADProcessor#0: User started speaking
+2026-11-24 04:32:24.219 | INFO     | app.voice.vad.hybrid_controller:on_speech_started:20 - [HYBRID] speech_started
+2026-11-24 04:32:24.220 | INFO     | app.voice.pipeline:outbound_greeting_timer:444 - [OUTBOUND] Incoming speech/transcript detected; automatic greeting cancelled
+2026-11-24 04:32:24.434 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 50 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:24.679 | DEBUG    | pipecat.processors.audio.vad_processor:on_speech_stopped:81 - VADProcessor#0: User stopped speaking
+2026-11-24 04:32:24.679 | INFO     | app.voice.vad.hybrid_controller:on_speech_stopped:47 - [HYBRID] short_speech duration=0.46s rms=0.0004
+2026-11-24 04:32:24.710 | INFO     | app.voice.processors.transcript:process_frame:28 - [FINAL] Hello?
+2026-11-24 04:32:24.711 | INFO     | app.voice.processors.answer_classification:process_frame:71 - [HUMAN CANDIDATE] score=0.4 count=1 reason=Possible human greeting
+2026-11-24 04:32:24.713 | DEBUG    | app.voice.processors.ivr_processor:process_frame:59 - [IVR BUFFER] combined='Hello?'
+2026-11-24 04:32:24.714 | DEBUG    | app.voice.processors.ivr_processor:process_frame:68 - [IVR NORMALIZED] 'hello?'
+2026-11-24 04:32:24.942 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - DeepgramSTTService#0 TTFB: 0.763s
+2026-11-24 04:32:25.459 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 100 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:25.713 | INFO     | app.voice.telephony.answer.turn_coordinator:_flush:60 - [TURN] number=1 text='Hello?'
+2026-11-24 04:32:25.714 | INFO     | app.voice.pipeline:on_completed_turn:144 - [VOICE PROBE] scheduling after ambiguous turn='Hello?'
+2026-11-24 04:32:26.419 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 150 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:27.214 | INFO     | app.voice.pipeline:emit_probe:159 - [VOICE PROBE] sending reason=ambiguous_greeting
+/home/prathamesh/projects/tago-health/.venv/lib/python3.12/site-packages/pipecat/adapters/llm/services/gemini_adapter.py:360: DeprecationWarning: `LLMContext(messages=[{"role": "system", ...}, ...])` is deprecated since 1.9.0 and will be removed in 2.0.0. Use `system_instruction` on the LLM service instead.
+  extracted_system = self._extract_initial_system(
+2026-11-24 04:32:27.258 | DEBUG    | pipecat.services.google.llm:_stream_content:623 - GoogleLLMService#0: Generating LLM response [{'parts': [{'text': "The outbound recipient may have answered but is not yet confirmed human. Give one brief introduction: you are the healthcare provider's AI assistant calling about an insurance claim. Ask whether you are speaking to a representative. Do not mention patient names, identifiers, or protected information. Do not claim you have verified who answered."}], 'role': 'user'}]
+2026-11-24 04:32:27.260 | INFO     | pipecat.services.llm_service:_apply_thinking_default:727 - GoogleLLMService#0: sending thinking_config={'thinking_level': 'minimal'} to gemini-3.5-flash-lite, its lowest thinking setting, for the fastest responses. If your bot needs multistep reasoning, set `thinking` in GoogleLLMService.Settings.
+2026-11-24 04:32:27.440 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 200 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:28.061 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - GoogleLLMService#0 TTFB: 0.840s
+2026-11-24 04:32:28.061 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfat_metrics:269 - GoogleLLMService#0 TTFAT: 0.841s (0.000s thinking)
+2026-11-24 04:32:28.092 | INFO     | app.voice.processors.latency:process_frame:59 - [LATENCY] llm_start_to_first_token=0.799s
+2026-11-24 04:32:28.094 | INFO     | app.voice.processors.latency:process_frame:66 - [LATENCY] llm_full_response=0.801s
+2026-11-24 04:32:28.096 | INFO     | app.voice.processors.llm_response:process_frame:33 - [GEMINI] Hello, I'm an AI assistant calling on behalf of a healthcare provider regarding an insurance claim. Am I speaking with a representative?
+2026-11-24 04:32:28.098 | INFO     | app.voice.processors.language_voice_router:flush_pending:84 - [LANGUAGE] detected=en voice=aura-2-helena-en
+2026-11-24 04:32:28.100 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_text_aggregation_metrics:387 - DeepgramTTSService#0 text aggregation time: 0.0007715225219726562
+2026-11-24 04:32:28.102 | DEBUG    | pipecat.services.tts_service:_synthesize_text:1971 - DeepgramTTSService#0: Generating TTS [Hello, I'm an AI assistant calling on behalf of a healthcare provider regarding an insurance claim. ]
+2026-11-24 04:32:28.103 | DEBUG    | pipecat.services.tts_service:_synthesize_text:1971 - DeepgramTTSService#0: Generating TTS [Am I speaking with a representative? ]
+2026-11-24 04:32:28.400 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - DeepgramTTSService#0 TTFB: 0.299s
+2026-11-24 04:32:28.406 | DEBUG    | pipecat.transports.base_output:_bot_started_speaking:751 - Bot started speaking
+2026-11-24 04:32:28.407 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.417 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 250 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:28.433 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.449 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.490 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.531 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.696 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:process_ttfa_metrics:228 - DeepgramTTSService#0 TTFA: 0.615s (0.316s leading silence)
+2026-11-24 04:32:28.699 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.701 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.741 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.781 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.823 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.862 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.902 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.942 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:28.982 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.021 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.061 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.101 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.142 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.222 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.262 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.301 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.381 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.421 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.422 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 300 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:29.462 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.502 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.542 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.583 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.620 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.662 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.702 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.741 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.783 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.822 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.862 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.900 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.942 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:29.980 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.022 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.062 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.101 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.141 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.222 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.261 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.302 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.381 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.422 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.462 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.463 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 350 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:30.501 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.543 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.582 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.621 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.662 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.701 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.741 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.781 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.821 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.861 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.900 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.943 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:30.981 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.021 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.061 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.102 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.142 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.181 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.221 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.261 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.300 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.381 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.422 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.423 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 400 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:31.460 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.503 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.541 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.583 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.621 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.661 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.701 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.741 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.781 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.821 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.861 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.901 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.941 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:31.981 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.022 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.062 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.102 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.137 | DEBUG    | pipecat.services.tts_service:_finish_tts_context:1613 - DeepgramTTSService#0 cleaning up TTS context b3f2c96a-88a2-4e52-b46a-09ccb279d410
+2026-11-24 04:32:32.141 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.221 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.262 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.300 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.382 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.422 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.437 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 450 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:32.462 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.502 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.542 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.582 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.622 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.662 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.703 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.742 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.780 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.822 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.862 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.902 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.942 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:32.983 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.020 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.062 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.101 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.141 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.222 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.262 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.301 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.383 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.421 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.461 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.462 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 500 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:33.501 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.542 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.582 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.622 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.661 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.703 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.741 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.781 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.821 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.863 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.901 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.941 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:33.982 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.021 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.061 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.101 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.142 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.221 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.262 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.301 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.341 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.382 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.420 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.462 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.463 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 550 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:34.500 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.543 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.581 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.622 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.661 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.702 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.740 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.783 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.821 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.862 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.901 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.941 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:34.981 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.022 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.061 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.102 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.142 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.221 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.261 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.301 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.382 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.421 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.462 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.463 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 600 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:35.502 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.542 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.582 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.622 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.662 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.702 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.742 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.782 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.821 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.862 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.902 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.942 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:35.981 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.021 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.061 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.102 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.141 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.182 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.222 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.262 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.302 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.342 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.382 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.422 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.462 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:36.463 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 650 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:36.502 | DEBUG    | pipecat.transports.base_output:_handle_frame:922 - Bot stopped speaking based on TTSStoppedFrame
+2026-11-24 04:32:36.502 | DEBUG    | pipecat.transports.base_output:_bot_stopped_speaking:856 - Bot stopped speaking
+2026-11-24 04:32:37.426 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 700 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:38.227 | DEBUG    | pipecat.processors.audio.vad_processor:on_speech_started:73 - VADProcessor#0: User started speaking
+2026-11-24 04:32:38.228 | INFO     | app.voice.vad.hybrid_controller:on_speech_started:20 - [HYBRID] speech_started
+2026-11-24 04:32:38.417 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 750 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:38.643 | DEBUG    | app.voice.processors.transcript:process_frame:23 - [INTERIM] Yes. I
+2026-11-24 04:32:39.418 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 800 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:39.658 | DEBUG    | app.voice.processors.transcript:process_frame:23 - [INTERIM] Yes, I am speaking. What
+2026-11-24 04:32:40.421 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 850 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:40.448 | INFO     | app.voice.processors.transcript:process_frame:28 - [FINAL] Yes, I am speaking. What is this about?
+2026-11-24 04:32:40.450 | DEBUG    | app.voice.processors.ivr_processor:process_frame:59 - [IVR BUFFER] combined='Hello? Yes, I am speaking. What is this about?'
+2026-11-24 04:32:40.451 | DEBUG    | app.voice.processors.ivr_processor:process_frame:68 - [IVR NORMALIZED] 'hello? yes, i am speaking. what is this about?'
+2026-11-24 04:32:40.484 | DEBUG    | pipecat.processors.audio.vad_processor:on_speech_stopped:81 - VADProcessor#0: User stopped speaking
+2026-11-24 04:32:40.485 | INFO     | app.voice.vad.hybrid_controller:on_speech_stopped:41 - [HYBRID] speech_confirmed duration=2.26s rms=0.0003
+2026-11-24 04:32:40.759 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - DeepgramSTTService#0 TTFB: 0.775s
+2026-11-24 04:32:41.419 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 900 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:41.486 | INFO     | app.voice.telephony.answer.turn_coordinator:_flush:60 - [TURN] number=2 text='Yes, I am speaking. What is this about?'
+2026-11-24 04:32:41.487 | INFO     | app.voice.pipeline:on_completed_turn:122 - [HUMAN] confirmed after conversational evidence; call_id=63825f17-1c02-42a0-a804-039a76764b4b
+2026-11-24 04:32:41.487 | INFO     | app.voice.telephony.events:emit:13 - [EVENT] human.detected call_id=63825f17-1c02-42a0-a804-039a76764b4b payload={'reason': 'conversational evidence', 'turn': 2}
+2026-11-24 04:32:41.487 | INFO     | app.voice.pipeline:start_human_conversation:223 - [VOICE] activating Gemini after confirmed human
+2026-11-24 04:32:41.490 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:786 - Thought signatures to apply: 1
+2026-11-24 04:32:41.490 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:837 - Applied 1 thought signatures.
+2026-11-24 04:32:41.491 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:786 - Thought signatures to apply: 1
+2026-11-24 04:32:41.491 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:837 - Applied 1 thought signatures.
+2026-11-24 04:32:41.491 | DEBUG    | pipecat.services.google.llm:_stream_content:623 - GoogleLLMService#0: Generating LLM response [{'parts': [{'text': "The outbound recipient may have answered but is not yet confirmed human. Give one brief introduction: you are the healthcare provider's AI assistant calling about an insurance claim. Ask whether you are speaking to a representative. Do not mention patient names, identifiers, or protected information. Do not claim you have verified who answered."}], 'role': 'user'}, {'parts': [{'text': "Hello, I'm an AI assistant calling on behalf of a healthcare provider regarding an insurance claim. Am I speaking with a representative?", 'thought_signature': '...'}], 'role': 'model'}, {'parts': [{'text': "You already introduced yourself and asked whether you are speaking with a representative. The recipient replied: 'Yes, I am speaking. What is this about?'. Continue the conversation naturally, answering their question or asking the next appropriate question. Do not repeat your introduction. Do not disclose patient information before appropriate verification."}], 'role': 'user'}]
+2026-11-24 04:32:42.128 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - GoogleLLMService#0 TTFB: 0.638s
+2026-11-24 04:32:42.128 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfat_metrics:269 - GoogleLLMService#0 TTFAT: 0.639s (0.000s thinking)
+2026-11-24 04:32:42.136 | INFO     | app.voice.processors.latency:process_frame:59 - [LATENCY] llm_start_to_first_token=0.640s
+2026-11-24 04:32:42.141 | INFO     | app.voice.processors.latency:process_frame:66 - [LATENCY] llm_full_response=0.645s
+2026-11-24 04:32:42.143 | INFO     | app.voice.processors.language_voice_router:flush_pending:84 - [LANGUAGE] detected=en voice=aura-2-helena-en
+2026-11-24 04:32:42.144 | INFO     | app.voice.processors.llm_response:process_frame:33 - [GEMINI] Hi, I'm calling to check on the status of a claim. Before we proceed, could you please let me know what information you'll need from me to verify the account?
+2026-11-24 04:32:42.146 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_text_aggregation_metrics:387 - DeepgramTTSService#0 text aggregation time: 0.000148773193359375
+2026-11-24 04:32:42.147 | DEBUG    | pipecat.services.tts_service:_synthesize_text:1971 - DeepgramTTSService#0: Generating TTS [Hi, I'm calling to check on the status of a claim. ]
+2026-11-24 04:32:42.151 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_text_aggregation_metrics:387 - DeepgramTTSService#0 text aggregation time: 0.0034008026123046875
+2026-11-24 04:32:42.152 | DEBUG    | pipecat.services.tts_service:_synthesize_text:1971 - DeepgramTTSService#0: Generating TTS [Before we proceed, could you please let me know what information you'll need from me to verify the account? ]
+2026-11-24 04:32:42.444 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - DeepgramTTSService#0 TTFB: 0.298s
+2026-11-24 04:32:42.447 | DEBUG    | pipecat.transports.base_output:_bot_started_speaking:751 - Bot started speaking
+2026-11-24 04:32:42.448 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.449 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 950 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:42.463 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.512 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:process_ttfa_metrics:228 - DeepgramTTSService#0 TTFA: 0.400s (0.102s leading silence)
+2026-11-24 04:32:42.530 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.569 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.690 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.692 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.732 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.774 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.892 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.932 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:42.972 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.053 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.093 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.131 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.172 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.211 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.252 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.331 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.371 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.412 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.453 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1000 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:43.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.612 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.652 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.691 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.731 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.772 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.853 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.892 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:43.973 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.051 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.092 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.132 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.212 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.253 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.332 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.451 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.452 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1050 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:44.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.531 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.612 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.652 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.692 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.731 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.772 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.892 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.932 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:44.972 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.051 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.091 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.172 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.211 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.252 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.332 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.453 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1100 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:45.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.611 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.651 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.692 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.733 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.772 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.851 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.893 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.932 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:45.972 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.052 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.092 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.131 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.212 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.251 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.332 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.412 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.452 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1150 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:46.486 | DEBUG    | pipecat.services.tts_service:_finish_tts_context:1613 - DeepgramTTSService#0 cleaning up TTS context 05fff20e-1844-4dc6-8050-8059f12288d1
+2026-11-24 04:32:46.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.614 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.651 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.692 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.732 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.891 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.932 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:46.972 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.013 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.052 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.092 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.172 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.211 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.252 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.332 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.423 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1200 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:47.451 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.612 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.652 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.732 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.772 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.851 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.892 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:47.972 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.053 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.092 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.132 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.211 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.252 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.291 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.331 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.371 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.412 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.453 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1250 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:48.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.611 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.652 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.732 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.772 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.811 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.891 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.932 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:48.971 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.052 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.091 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.172 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.212 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.252 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.332 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.412 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.454 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1300 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:49.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.609 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.650 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.689 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.730 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.770 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.809 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.850 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.889 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.929 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:49.969 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.008 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.049 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.089 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.129 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.168 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.208 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.249 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.290 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.329 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.369 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.409 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.449 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.451 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1350 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:50.489 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.529 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.569 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.609 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.649 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.689 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.729 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.769 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.809 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.849 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.891 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.930 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:50.969 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.009 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.049 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.089 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.128 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.169 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.209 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.249 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.289 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.329 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.368 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.409 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.449 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.450 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1400 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:51.489 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.529 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:32:51.568 | DEBUG    | pipecat.transports.base_output:_handle_frame:922 - Bot stopped speaking based on TTSStoppedFrame
+2026-11-24 04:32:51.568 | DEBUG    | pipecat.transports.base_output:_bot_stopped_speaking:856 - Bot stopped speaking
+2026-11-24 04:32:52.435 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1450 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:53.425 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1500 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:54.438 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1550 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:55.418 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1600 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:56.420 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1650 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:56.545 | DEBUG    | pipecat.processors.audio.vad_processor:on_speech_started:73 - VADProcessor#0: User started speaking
+2026-11-24 04:32:56.546 | INFO     | app.voice.vad.hybrid_controller:on_speech_started:20 - [HYBRID] speech_started
+2026-11-24 04:32:56.547 | DEBUG    | pipecat.processors.aggregators.llm_response_universal:_on_user_turn_started:1497 - LLMUserAggregator#0: User started speaking (strategy: VADUserTurnStartStrategy#0)
+2026-11-24 04:32:56.547 | DEBUG    | pipecat.processors.frame_processor:broadcast_interruption:1050 - LLMUserAggregator#0: broadcasting interruption
+2026-11-24 04:32:56.547 | DEBUG    | pipecat.turns.user_stop.speech_timeout_user_turn_stop_strategy:process_frame:159 - SpeechTimeoutUserTurnStopStrategy#0 VADUserStartedSpeakingFrame received
+2026-11-24 04:32:57.419 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1700 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:57.964 | DEBUG    | app.voice.processors.transcript:process_frame:23 - [INTERIM] My claim statement
+2026-11-24 04:32:58.416 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1750 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:58.673 | INFO     | app.voice.processors.transcript:process_frame:28 - [FINAL] My claim status number?
+2026-11-24 04:32:58.675 | DEBUG    | app.voice.processors.ivr_processor:process_frame:59 - [IVR BUFFER] combined='Hello? Yes, I am speaking. What is this about? My claim status number?'
+2026-11-24 04:32:58.675 | DEBUG    | app.voice.processors.ivr_processor:process_frame:68 - [IVR NORMALIZED] 'hello? yes, i am speaking. what is this about? my claim status number?'
+2026-11-24 04:32:58.822 | DEBUG    | pipecat.processors.audio.vad_processor:on_speech_stopped:81 - VADProcessor#0: User stopped speaking
+2026-11-24 04:32:58.822 | INFO     | app.voice.vad.hybrid_controller:on_speech_stopped:41 - [HYBRID] speech_confirmed duration=2.28s rms=0.0004
+2026-11-24 04:32:58.823 | DEBUG    | pipecat.turns.user_stop.speech_timeout_user_turn_stop_strategy:process_frame:162 - SpeechTimeoutUserTurnStopStrategy#0 VADUserStoppedSpeakingFrame received
+2026-11-24 04:32:58.823 | WARNING  | pipecat.turns.user_stop.speech_timeout_user_turn_stop_strategy:_handle_vad_user_stopped_speaking:193 - SpeechTimeoutUserTurnStopStrategy#0: VAD stop_secs (0.5s) differs from the recommended default (0.2s). Built-in p99 latency values assume stop_secs=0.2. Re-run https://github.com/pipecat-ai/stt-benchmark with your settings and pass the TTFS P99 latency result as ttfs_p99_latency to your STT service.
+2026-11-24 04:32:58.823 | WARNING  | pipecat.turns.user_stop.speech_timeout_user_turn_stop_strategy:_handle_vad_user_stopped_speaking:203 - SpeechTimeoutUserTurnStopStrategy#0: VAD stop_secs (0.5s) >= STT p99 latency (0.35s). STT wait timeout collapsed to 0s, which may cause delayed turn detection specified by the user_turn_stop_timeout parameter in the LLMUserAggregatorParams.
+2026-11-24 04:32:59.116 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - DeepgramSTTService#0 TTFB: 0.793s
+2026-11-24 04:32:59.324 | DEBUG    | pipecat.processors.aggregators.llm_response_universal:_on_user_turn_inference_triggered:1545 - LLMUserAggregator#0: User turn inference triggered (strategy: SpeechTimeoutUserTurnStopStrategy#0)
+2026-11-24 04:32:59.325 | DEBUG    | pipecat.processors.aggregators.llm_response_universal:_on_user_turn_stopped:1613 - LLMUserAggregator#0: User stopped speaking (strategy: SpeechTimeoutUserTurnStopStrategy#0)
+2026-11-24 04:32:59.327 | INFO     | app.voice.processors.latency:process_frame:42 - [LATENCY] user_turn_ended
+2026-11-24 04:32:59.328 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:786 - Thought signatures to apply: 2
+2026-11-24 04:32:59.328 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:837 - Applied 2 thought signatures.
+2026-11-24 04:32:59.328 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:786 - Thought signatures to apply: 2
+2026-11-24 04:32:59.329 | DEBUG    | pipecat.adapters.llm.services.gemini_adapter:_apply_thought_signatures_to_messages:837 - Applied 2 thought signatures.
+2026-11-24 04:32:59.328 | DEBUG    | pipecat.services.google.llm:_stream_content:623 - GoogleLLMService#0: Generating LLM response [{'parts': [{'text': "The outbound recipient may have answered but is not yet confirmed human. Give one brief introduction: you are the healthcare provider's AI assistant calling about an insurance claim. Ask whether you are speaking to a representative. Do not mention patient names, identifiers, or protected information. Do not claim you have verified who answered."}], 'role': 'user'}, {'parts': [{'text': "Hello, I'm an AI assistant calling on behalf of a healthcare provider regarding an insurance claim. Am I speaking with a representative?", 'thought_signature': '...'}], 'role': 'model'}, {'parts': [{'text': "You already introduced yourself and asked whether you are speaking with a representative. The recipient replied: 'Yes, I am speaking. What is this about?'. Continue the conversation naturally, answering their question or asking the next appropriate question. Do not repeat your introduction. Do not disclose patient information before appropriate verification."}], 'role': 'user'}, {'parts': [{'text': "Hi, I'm calling to check on the status of a claim. Before we proceed, could you please let me know what information you'll need from me to verify the account?", 'thought_signature': '...'}], 'role': 'model'}, {'parts': [{'text': 'My claim status number?'}], 'role': 'user'}]
+2026-11-24 04:32:59.415 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1800 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:32:59.824 | INFO     | app.voice.telephony.answer.turn_coordinator:_flush:60 - [TURN] number=3 text='My claim status number?'
+2026-11-24 04:32:59.966 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - GoogleLLMService#0 TTFB: 0.639s
+2026-11-24 04:32:59.967 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfat_metrics:269 - GoogleLLMService#0 TTFAT: 0.639s (0.000s thinking)
+2026-11-24 04:32:59.969 | INFO     | app.voice.processors.latency:process_frame:53 - [LATENCY] turn_end_to_first_token=0.642s
+2026-11-24 04:32:59.969 | INFO     | app.voice.processors.latency:process_frame:59 - [LATENCY] llm_start_to_first_token=0.633s
+2026-11-24 04:32:59.972 | INFO     | app.voice.processors.language_voice_router:flush_pending:84 - [LANGUAGE] detected=en voice=aura-2-helena-en
+2026-11-24 04:32:59.973 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_text_aggregation_metrics:387 - DeepgramTTSService#0 text aggregation time: 0.00011610984802246094
+2026-11-24 04:32:59.974 | DEBUG    | pipecat.services.tts_service:_synthesize_text:1971 - DeepgramTTSService#0: Generating TTS [I can provide the claim number. ]
+2026-11-24 04:32:59.984 | INFO     | app.voice.processors.latency:process_frame:66 - [LATENCY] llm_full_response=0.648s
+2026-11-24 04:32:59.984 | INFO     | app.voice.processors.latency:process_frame:72 - [LATENCY] turn_end_to_full_response=0.657s
+2026-11-24 04:32:59.986 | INFO     | app.voice.processors.llm_response:process_frame:33 - [GEMINI] I can provide the claim number. Before we get into the details, should I also have the patient's ID and date of birth ready for verification?
+2026-11-24 04:32:59.989 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_text_aggregation_metrics:387 - DeepgramTTSService#0 text aggregation time: 0.0007412433624267578
+2026-11-24 04:32:59.989 | DEBUG    | pipecat.services.tts_service:_synthesize_text:1971 - DeepgramTTSService#0: Generating TTS [Before we get into the details, should I also have the patient's ID and date of birth ready for verification? ]
+2026-11-24 04:33:00.268 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:stop_ttfb_metrics:175 - DeepgramTTSService#0 TTFB: 0.294s
+2026-11-24 04:33:00.270 | DEBUG    | pipecat.transports.base_output:_bot_started_speaking:751 - Bot started speaking
+2026-11-24 04:33:00.271 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.286 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.313 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.352 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.393 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.435 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1850 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:00.529 | DEBUG    | pipecat.processors.metrics.frame_processor_metrics:process_ttfa_metrics:228 - DeepgramTTSService#0 TTFA: 0.581s (0.287s leading silence)
+2026-11-24 04:33:00.531 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.533 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.573 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.653 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.734 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.813 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.893 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:00.973 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.013 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.053 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.093 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.134 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.213 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.253 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.293 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.332 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.453 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1900 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:01.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.533 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.653 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.732 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.813 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.892 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:01.972 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.013 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.053 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.093 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.212 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.254 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.293 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.333 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.373 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.453 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.454 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 1950 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:02.492 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.573 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.653 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.733 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.774 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.812 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.852 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.894 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:02.974 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.013 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.053 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.094 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.212 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.252 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.293 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.333 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.372 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.453 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2000 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:03.493 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.533 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.654 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.733 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.785 | DEBUG    | pipecat.services.tts_service:_finish_tts_context:1613 - DeepgramTTSService#0 cleaning up TTS context 136d0069-c823-4fd2-8bfb-9d4f8dcca1df
+2026-11-24 04:33:03.814 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.853 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.893 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:03.974 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.013 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.053 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.092 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.174 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.213 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.253 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.293 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.333 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.373 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.453 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.454 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2050 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:04.493 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.533 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.574 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.655 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.692 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.733 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.813 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.854 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.893 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:04.973 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.054 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.092 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.174 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.213 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.253 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.292 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.333 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.373 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.453 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.454 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2100 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:05.494 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.533 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.573 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.653 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.732 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.814 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.854 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.893 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:05.974 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.013 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.052 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.093 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.134 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.172 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.213 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.253 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.293 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.333 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.373 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.453 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.455 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2150 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:06.493 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.532 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.572 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.613 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.653 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.693 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.733 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.774 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.813 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.853 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.893 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.933 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:06.973 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.012 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.052 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.093 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.133 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.173 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.212 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.253 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.293 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.333 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.373 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.413 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.452 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.453 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2200 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:07.493 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.533 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.573 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.612 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.653 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.694 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.733 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.773 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.813 | INFO     | app.voice.serializers.exotel:serialize:80 - [EXOTEL OUTBOUND] Audio serialized input_bytes=1920 output_bytes=640 stream_sid=aa60b3a47fb98564ae5185de6ecd1abo
+2026-11-24 04:33:07.852 | DEBUG    | pipecat.transports.base_output:_handle_frame:922 - Bot stopped speaking based on TTSStoppedFrame
+2026-11-24 04:33:07.852 | DEBUG    | pipecat.transports.base_output:_bot_stopped_speaking:856 - Bot stopped speaking
+2026-11-24 04:33:08.440 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2250 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:09.438 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2300 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:10.427 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2350 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:11.419 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2400 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:12.416 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2450 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:13.438 | INFO     | app.voice.serializers.exotel:deserialize:174 - [EXOTEL SERIALIZER] Processed 2500 chunks, input=320 bytes, output=640 bytes
+2026-11-24 04:33:14.459 | INFO     | app.voice.serializers.exotel:deserialize:148 - [EXOTEL SERIALIZER] Stream stopped reason=unknown
+2026-11-24 04:33:14.459 | INFO     | app.api.websocket.exotel:handle_exotel_event:332 - [CALL 1baf87586eae4e67ab277fb2fe8fc9f7] Stream ended reason=exotel_unknown
