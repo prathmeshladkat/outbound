@@ -47,6 +47,7 @@ from app.voice.telephony.answer.turn_coordinator import TurnCoordinator
 from app.voice.telephony.answer.human_policy import HumanConfirmationPolicy
 from app.voice.processors.outbound_voice_gate import OutboundVoiceGate
 from app.voice.telephony.events import InMemoryCallEventSink
+from app.voice.telephony.hold.controller import HoldController
 from app.voice.telephony.answer.models import (
     AnswerType,
     CallEvent,
@@ -111,7 +112,30 @@ async def run_transcription_pipeline(
 
 
     human_policy = HumanConfirmationPolicy()
-    voice_gate = OutboundVoiceGate()
+    def on_hold_transition(transition):
+        logger.info("[HOLD] {} -> {} action={} reason={}", transition.previous.value,
+                    transition.current.value, transition.action, transition.reason)
+        event_type = {"hold_started": CallEventType.HOLD_STARTED,
+                      "hold_ended": CallEventType.HOLD_ENDED}.get(transition.action)
+        if event_type is not None:
+            event_sink.emit(CallEvent(call_id=call_id, event_type=event_type,
+                                      payload={"reason": transition.reason}))
+
+    hold_controller = HoldController(on_transition=on_hold_transition)
+    voice_gate = OutboundVoiceGate(hold_controller=hold_controller)
+    hold_tasks = set()
+
+    async def hold_watchdog():
+        while True:
+            await asyncio.sleep(0.25)
+            hold_controller.tick()
+
+    async def resume_conversation(text):
+        if call_ending or hold_controller.blocked:
+            return
+        await task.queue_frames([LLMMessagesAppendFrame(
+            messages=[{"role": "user", "content": text}], run_llm=True)])
+
     voice_activation_pending = False
     probe_task = None
     speech_active = False
@@ -122,6 +146,12 @@ async def run_transcription_pipeline(
     def on_completed_turn(turn):
         nonlocal voice_activation_pending, probe_task, activation_task
         if call_ending:
+            return
+        if human_policy.confirmed and call_mode == "outbound" and enable_outbound_voice:
+            if hold_controller.completed():
+                resume_task = asyncio.create_task(resume_conversation(turn.text))
+                hold_tasks.add(resume_task)
+                resume_task.add_done_callback(hold_tasks.discard)
             return
         if ivr_processor.machine.state == IVRState.ACTION_PENDING:
             schedule_dtmf()
@@ -533,6 +563,7 @@ async def run_transcription_pipeline(
 
     runner = PipelineRunner()
     greeting_task = None
+    hold_watchdog_task = None
 
     try:
         logger.info(
@@ -541,6 +572,7 @@ async def run_transcription_pipeline(
         )
 
         if call_mode == "outbound" and not ivr_test_mode:
+            hold_watchdog_task = asyncio.create_task(hold_watchdog())
             greeting_task = asyncio.create_task(
                 outbound_greeting_timer()
             )
@@ -553,6 +585,13 @@ async def run_transcription_pipeline(
 
     finally:
         call_ending = True
+        if hold_watchdog_task is not None:
+            hold_watchdog_task.cancel()
+            await asyncio.gather(hold_watchdog_task, return_exceptions=True)
+        pending_hold_tasks = list(hold_tasks)
+        for hold_task in pending_hold_tasks:
+            hold_task.cancel()
+        await asyncio.gather(*pending_hold_tasks, return_exceptions=True)
         if activation_task is not None:
             activation_task.cancel()
             await asyncio.gather(activation_task, return_exceptions=True)
